@@ -239,13 +239,27 @@ void multiStepMergeSort(char* idxFile,char* sortedIdxFile)
 		strcat(tempfile,".");
 		strcat(tempfile,seq);
 		
+		//changes start-----------------------
+		sprintf(stempfile,"%s",idxFile);
+		sprintf(seq,"%.03d",i);
+		strcat(stempfile,".super.");
+		strcat(stempfile,seq);
+		//changes end-------------------------
+		
 		fread(&rec,sizeof(int),len,ipfile);
 		qsort(rec,len,sizeof(int),comparator);
 		temp=fopen(tempfile,"wb");
 		fwrite(rec,sizeof(int),len,temp);
+		//changes start------------------------
+		fclose(temp);
+		temp=fopen(stempfile,"wb");
+		fwrite(rec,sizeof(int),len,temp);
+		fclose(temp);
+		//changes end------------------------
+		
 		opfile=fopen(sortedIdxFile,"wb");
 		fwrite(rec,sizeof(int),len,opfile);
-		fclose(temp);
+		//fclose(temp);			// changed code
 		fclose(ipfile);
 	}
 	else
@@ -487,7 +501,13 @@ void replacementMergeSort(char* idxFile,char* sortedIdxFile)
 			count++;
 		}
 		
-		temp = fopen(strcat(idxFile,".000"),"wb");
+		//Changes Start----------------------------
+		sprintf(tempfile,"%s",idxFile);
+		strcat(tempfile,".000");
+		//Changes End------------------------------
+							
+		//temp = fopen(strcat(idxFile,".000"),"wb");		//Change
+		temp = fopen(tempfile,"wb");
 		fwrite(oprec,sizeof(int),count,temp);
 		fclose(temp);
 		opfile=fopen(sortedIdxFile,"wb");
