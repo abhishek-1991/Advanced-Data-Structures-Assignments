@@ -555,6 +555,10 @@ void display()
 				enqueue(secondary, treenode.child[i]);
 				//printf("%ld ", treenode.child[i]);
 			}
+			else
+			{
+				break;
+			}
 		}
 
 		//printqueue(secondary);
